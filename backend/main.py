@@ -30,6 +30,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.middleware("http")
+async def no_cache(request, call_next):
+    """前端静态资源禁止缓存，避免改完页面后浏览器还在用旧版本。"""
+    response = await call_next(request)
+    if not request.url.path.startswith("/results"):
+        response.headers["Cache-Control"] = "no-store, must-revalidate"
+    return response
+
+
 MAX_UPLOAD_MB = 20
 
 # OCR 结果缓存：识别一次后前端可勾选行，转换时用 ocr_id 复用，避免重复识别
