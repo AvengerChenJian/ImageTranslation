@@ -1,0 +1,25 @@
+# ---- Web server ----
+fastapi
+uvicorn[standard]
+python-multipart
+
+# ---- Image processing ----
+opencv-python
+numpy
+pillow
+fonttools        # check glyph coverage to pick a font that renders the text
+
+# ---- OCR (pick the one matching OCR_ENGINE) ----
+# rapid: default, ONNX build of PaddleOCR models, CPU friendly
+rapidocr-onnxruntime
+# paddle: pip install paddleocr paddlepaddle   (heavy)
+# easy:   pip install easyocr                  (needs torch)
+# tesseract: install the Tesseract binary, then: pip install pytesseract
+
+# ---- Translation ----
+# httpx 直连 gtx 接口，无需 key
+# deep-translator 仅作为可选备用实现：pip install deep-translator
+httpx             # Youdao / DeepL / external OCR service calls
+
+# ---- Config ----
+python-dotenv

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>商品图翻译</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand__logo">译</div>
+      <div class="brand__text">
+        <h1>商品图翻译</h1>
+        <p>上传商品图 → 自动识别文字 → 擦除原文并按原样式重绘译文</p>
+      </div>
+    </div>
+    <div class="status" id="status">加载中…</div>
+  </header>
+
+  <main class="layout">
+    <section class="card controls">
+      <h2><span class="step">1</span>上传图片</h2>
+      <div class="dropzone" id="dropzone">
+        <input type="file" id="fileInput" accept="image/*" hidden />
+        <div class="dropzone__inner" id="dropzoneInner">
+          <div class="dropzone__icon">＋</div>
+          <p>把图片拖到这里，或 <span class="link">点击选择</span></p>
+          <small>支持 JPG / PNG / WEBP，不超过 20MB</small>
+        </div>
+        <img id="thumb" class="dropzone__thumb" alt="已选择的图片" hidden />
+      </div>
+
+      <h2><span class="step">2</span>语言规则</h2>
+      <div class="field">
+        <label for="srcLang">源语言</label>
+        <select id="srcLang"></select>
+      </div>
+      <div class="field">
+        <label for="tgtLang">目标语言</label>
+        <select id="tgtLang"></select>
+      </div>
+      <div class="field">
+        <label for="outline">文字描边</label>
+        <select id="outline">
+          <option value="auto">自动（复杂背景时添加）</option>
+          <option value="on">始终添加</option>
+          <option value="off">关闭</option>
+        </select>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn--primary" id="btnRun" disabled>开始转换</button>
+        <button class="btn btn--ghost" id="btnOcr" disabled>重新识别</button>
+      </div>
+      <p class="hint" id="hint"></p>
+
+      <h2><span class="step">3</span>不翻译的内容 <small class="optional">可选</small></h2>
+      <div class="ocr" id="ocrPanel" hidden>
+        <div class="ocr__head">
+          <span id="ocrSummary">识别中…</span>
+          <button type="button" class="linkbtn" id="btnToggleAll">全部不翻译</button>
+        </div>
+        <ul class="ocr__list" id="ocrList"></ul>
+        <div class="ocr__terms">
+          <div class="ocr__terms-title">保护词（命中后自动跳过翻译，如品牌名 / 商标）</div>
+          <div class="chips" id="termsList"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card preview">
+      <div class="preview__head">
+        <h2>结果预览</h2>
+        <div class="preview__actions" id="actions" hidden>
+          <a class="btn btn--primary" id="btnDownload" download>下载结果图</a>
+          <button class="btn btn--ghost" id="btnReset">重新上传</button>
+        </div>
+      </div>
+
+      <div class="alert" id="alert" hidden></div>
+
+      <div class="stage" id="stage">
+        <div class="placeholder" id="placeholder">左侧上传图片后，这里会显示结果</div>
+        <div class="compare" id="compare" hidden>
+          <img id="imgAfter" alt="结果图" />
+          <div class="compare__before"><img id="imgBefore" alt="原图" /></div>
+          <span class="compare__tag compare__tag--l">原图</span>
+          <span class="compare__tag compare__tag--r">译文</span>
+          <div class="compare__handle" id="handle"></div>
+        </div>
+      </div>
+
+      <div class="lines" id="lines" hidden>
+        <h3>识别与翻译 <span class="badge" id="lineCount">0</span></h3>
+        <ul id="lineList"></ul>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" hidden></div>
+  <script src="/app.js"></script>
+</body>
+</html>
